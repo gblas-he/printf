@@ -6,7 +6,7 @@
 /*   By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:06:34 by gblas-he          #+#    #+#             */
-/*   Updated: 2026/02/07 20:05:51 by gblas-he         ###   ########.fr       */
+/*   Updated: 2026/02/26 15:31:20 by gblas-he         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,27 @@ void	ft_putnbr(int nb)
 	write(1, &nb, 1);
 }
 
+void	ft_putnbr_hexa(void *p)
+{
+	unsigned long n = (unsigned long)p;
+	if (n == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		return ;
+	}
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		n = -n;
+	}
+	if (n >= 16)
+		ft_putnbr_hexa(n / 16);
+	if (n < 10)
+		 n = (n % 16) + '0';
+	n = (n % 16) - 10 + 'A';
+	write(1, &n, 1);
+}
+
 void	ft_putchar(int c)
 {
 	write(1, &c, 1);
@@ -56,7 +77,7 @@ static void	ft_condition(char f, va_list args)
 	else if (f == 's')
 		ft_putstr(va_arg(args, char *));
 	else if (f == 'p')
-		va_arg(args, void *);
+		ft_putnbr_hexa(va_arg(args, void *));
 	else if (f == 'd')
 		ft_putnbr(va_arg(args, int));
 }
@@ -85,10 +106,13 @@ int	ft_printf(char const *format, ...)
 int	main(void)
 {
 	char *p = "hola";
-	ft_printf("caracter: string %s caracter %c puntero int %d\n", "123", 'r',
+	int n = 2;
+	int *p2 = &n;
+	ft_printf("ft_printf: string %s, caracter %c, decimal %d\n", "123", 'r',
 		123);
-	printf("original: string %s caracter %c puntero %p int %d\n", "123", 'r',
-		&p, 123);
-	printf("%p", 2);
+	printf("original: string %s, caracter %c, decimal %d\n", "123", 'r',
+		123);
+	ft_printf("ft_puntero: %p, %s, %p, %d\n", p, p, p2, *p2);
+	printf("puntero: %p, %s, %p, %d", p, p, p2, *p2);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:06:34 by gblas-he          #+#    #+#             */
-/*   Updated: 2026/02/26 15:31:20 by gblas-he         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:28:10 by gblas-he         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ void	ft_putstr(char *s)
 		write(1, &s[i], 1);
 		i++;
 	}
+}
+
+// void	ft_putnbr_ptr(void *p)
+// {
+
+// }
+
+void	ft_putnbr_unsing(unsigned int nb)
+{
+	if (nb >= 10)
+		ft_putnbr_unsing(nb / 10);
+	nb = (nb % 10) + '0';
+	write(1, &nb, 1);
 }
 
 void	ft_putnbr(int nb)
@@ -44,24 +57,24 @@ void	ft_putnbr(int nb)
 	write(1, &nb, 1);
 }
 
-void	ft_putnbr_hexa(void *p)
+void	ft_putnbr_hexa(unsigned int num, int mayus)
 {
-	unsigned long n = (unsigned long)p;
-	if (n == -2147483648)
-	{
-		write(1, "-2147483648", 11);
-		return ;
-	}
+	unsigned long	n;
+	char			*base;
+
+	if (mayus == 1)
+		base = "0123456789ABCDF";
+	else
+		base = "0123456789abcdf";
+	n = (unsigned long)num;
 	if (n < 0)
 	{
 		write(1, "-", 1);
 		n = -n;
 	}
 	if (n >= 16)
-		ft_putnbr_hexa(n / 16);
-	if (n < 10)
-		 n = (n % 16) + '0';
-	n = (n % 16) - 10 + 'A';
+		ft_putnbr_hexa(n / 16, mayus);
+	n = base[n % 16];
 	write(1, &n, 1);
 }
 
@@ -76,10 +89,18 @@ static void	ft_condition(char f, va_list args)
 		ft_putchar(va_arg(args, int));
 	else if (f == 's')
 		ft_putstr(va_arg(args, char *));
-	else if (f == 'p')
-		ft_putnbr_hexa(va_arg(args, void *));
-	else if (f == 'd')
+	// else if (f == 'p')
+	// 	ft_putnbr_ptr(va_arg(args, void *));
+	else if (f == 'd' || f == 'i')
 		ft_putnbr(va_arg(args, int));
+	else if (f == 'u')
+		ft_putnbr_unsing(va_arg(args, unsigned int));
+	else if (f == 'x')
+		ft_putnbr_hexa(va_arg(args, unsigned int), 0);
+	else if (f == 'X')
+		ft_putnbr_hexa(va_arg(args, unsigned int), 1);
+	else if (f == '%')
+		ft_putchar('%');
 }
 
 int	ft_printf(char const *format, ...)
@@ -106,13 +127,15 @@ int	ft_printf(char const *format, ...)
 int	main(void)
 {
 	char *p = "hola";
-	int n = 2;
+	int n = 42;
+	int n2 = -42;
 	int *p2 = &n;
-	ft_printf("ft_printf: string %s, caracter %c, decimal %d\n", "123", 'r',
-		123);
-	printf("original: string %s, caracter %c, decimal %d\n", "123", 'r',
-		123);
-	ft_printf("ft_puntero: %p, %s, %p, %d\n", p, p, p2, *p2);
-	printf("puntero: %p, %s, %p, %d", p, p, p2, *p2);
+
+	// ft_printf("ft_printf: string %s, caracter %c, decimal %d\n", "123", 'r',
+	// 	123);
+	// printf("original: string %s, caracter %c, decimal %d\n", "123", 'r',
+	// 123);
+	ft_printf("ft_puntero: %s, %d, %x, %X, %%, %u\n", p, *p2, n, n, n2);
+	printf("puntero: %s, %d, %x, %X, %%, %u", p, *p2, n, n, n2);
 	return (0);
 }

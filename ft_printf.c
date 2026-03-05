@@ -6,7 +6,7 @@
 /*   By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:06:34 by gblas-he          #+#    #+#             */
-/*   Updated: 2026/03/05 20:28:10 by gblas-he         ###   ########.fr       */
+/*   Updated: 2026/03/05 20:31:08 by gblas-he         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	ft_printf(char const *format, ...)
 	va_list	args;
 
 	i = 0;
+	if (!format)
+		return (-1);
 	va_start(args, format);
 	while (format[i])
 	{

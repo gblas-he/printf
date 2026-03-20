@@ -6,7 +6,7 @@
 /*   By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:06:34 by gblas-he          #+#    #+#             */
-/*   Updated: 2026/03/05 20:32:45 by gblas-he         ###   ########.fr       */
+/*   Updated: 2026/03/20 19:30:25 by gblas-he         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ void	ft_putstr(char *s)
 		i++;
 	}
 }
-
-// void	ft_putnbr_ptr(void *p)
-// {
-
-// }
 
 void	ft_putnbr_unsing(unsigned int nb)
 {
@@ -78,6 +73,12 @@ void	ft_putnbr_hexa(unsigned int num, int mayus)
 	write(1, &n, 1);
 }
 
+void	ft_putnbr_ptr(__attribute__((unused)) unsigned long num)
+{
+	write(1, "0x", 2);
+	ft_putnbr_hexa(num, 1);
+}
+
 void	ft_putchar(int c)
 {
 	write(1, &c, 1);
@@ -89,8 +90,8 @@ static void	ft_condition(char f, va_list args)
 		ft_putchar(va_arg(args, int));
 	else if (f == 's')
 		ft_putstr(va_arg(args, char *));
-	// else if (f == 'p')
-	// 	ft_putnbr_ptr(va_arg(args, void *));
+	else if (f == 'p')
+		ft_putnbr_ptr(va_arg(args, unsigned long));
 	else if (f == 'd' || f == 'i')
 		ft_putnbr(va_arg(args, int));
 	else if (f == 'u')
@@ -128,16 +129,16 @@ int	ft_printf(char const *format, ...)
 
 int	main(void)
 {
-	char *p = "hola";
-	int n = 42;
-	int n2 = -42;
-	int *p2 = &n;
+	__attribute__((unused)) char *p = "hola";
+	__attribute__((unused)) int n = 42;
+	__attribute__((unused)) int n2 = -2147483648;
+	__attribute__((unused)) int *p2 = &n;
 
 	// ft_printf("ft_printf: string %s, caracter %c, decimal %d\n", "123", 'r',
 	// 	123);
 	// printf("original: string %s, caracter %c, decimal %d\n", "123", 'r',
 	// 123);
-	ft_printf("ft_puntero: %s, %d, %x, %X, %%, %u\n", p, *p2, n, n, n2);
-	printf("puntero: %s, %d, %x, %X, %%, %u", p, *p2, n, n, n2);
+	ft_printf("ft_puntero: %s, %d, %x, %X, %%, %u, %p\n", p, *p2, n, n, n2, p);
+	printf("puntero: %s, %d, %x, %X, %%, %u, %p", p, *p2, n, n, n2, p);
 	return (0);
 }

@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_chars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 17:08:18 by gblas-he          #+#    #+#             */
-/*   Updated: 2026/03/21 21:29:38 by gblas-he         ###   ########.fr       */
+/*   Created: 2026/03/21 16:23:45 by gblas-he          #+#    #+#             */
+/*   Updated: 2026/03/21 21:29:34 by gblas-he         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <unistd.h>
+int	ft_putchar(int c)
+{
+	return (write(1, &c, 1));
+}
 
-int		ft_printf(char const *format, ...);
-int		ft_putchar(int c);
-int		ft_putstr(char *s);
-void	ft_putnbr(int nb);
-void	ft_putnbr_unsing(unsigned int nb);
-void	ft_putnbr_hexa(unsigned int num, int mayus);
-void	ft_putnbr_ptr(unsigned long num);
+int	ft_putstr(char *s)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (s[i])
+		write(1, &s[i++], 1);
+	return (i);
+}

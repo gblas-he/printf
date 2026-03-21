@@ -6,18 +6,18 @@
 #    By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/02 16:03:25 by gblas-he          #+#    #+#              #
-#    Updated: 2026/02/06 17:06:07 by gblas-he         ###   ########.fr        #
+#    Updated: 2026/03/21 15:48:09 by gblas-he         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = ft_printf.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 	
 
 SRCS = ft_printf.c
 OBJS = $(SRCS:.c=.o)
-INCLUDE = libftprintf.h
+INCLUDE = ft_printf.h
 	
 AR = ar rcs
 RM = rm -f

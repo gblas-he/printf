@@ -6,11 +6,11 @@
 /*   By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 17:19:11 by gblas-he          #+#    #+#             */
-/*   Updated: 2026/03/16 18:22:08 by gblas-he         ###   ########.fr       */
+/*   Updated: 2026/03/21 15:47:41 by gblas-he         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 void	test_printf(void)
 {

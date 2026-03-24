@@ -6,43 +6,46 @@
 /*   By: gblas-he <gblas-he@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 16:15:17 by gblas-he          #+#    #+#             */
-/*   Updated: 2026/03/21 21:29:37 by gblas-he         ###   ########.fr       */
+/*   Updated: 2026/03/24 18:39:08 by gblas-he         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putnbr(int nb)
+int	ft_putnbr(int nb)
 {
+	int	count;
+
+	count = 0;
 	if (nb == -2147483648)
-	{
-		write(1, "-2147483648", 11);
-		return ;
-	}
+		return (write(1, "-2147483648", 11));
 	if (nb < 0)
 	{
-		write(1, "-", 1);
+		count += write(1, "-", 1);
 		nb = -nb;
 	}
 	if (nb >= 10)
-		ft_putnbr(nb / 10);
-	nb = (nb % 10) + '0';
-	write(1, &nb, 1);
+		count += ft_putnbr(nb / 10);
+	count += nb = (nb % 10) + '0';
+	count += write(1, &nb, 1);
+	return (count);
 }
 
-void	ft_putnbr_unsing(unsigned int nb)
+int	ft_putnbr_unsing(unsigned int nb)
 {
 	if (nb >= 10)
 		ft_putnbr_unsing(nb / 10);
 	nb = (nb % 10) + '0';
-	write(1, &nb, 1);
+	return (write(1, &nb, 1));
 }
 
-void	ft_putnbr_hexa(unsigned int num, int mayus)
+int	ft_putnbr_hexa(unsigned long num, int mayus)
 {
 	unsigned long	n;
 	char			*base;
+	int				count;
 
+	count = 0;
 	if (mayus == 1)
 		base = "0123456789ABCDF";
 	else
@@ -50,22 +53,24 @@ void	ft_putnbr_hexa(unsigned int num, int mayus)
 	n = (unsigned long)num;
 	if (n < 0)
 	{
-		write(1, "-", 1);
+		count += write(1, "-", 1);
 		n = -n;
 	}
 	if (n >= 16)
-		ft_putnbr_hexa(n / 16, mayus);
-	n = base[n % 16];
-	write(1, &n, 1);
+		count += ft_putnbr_hexa(n / 16, mayus);
+	count += n = base[n % 16];
+	count += write(1, &n, 1);
+	return (count);
 }
 
-void	ft_putnbr_ptr(unsigned long num)
+int	ft_putnbr_ptr(unsigned long num)
 {
+	int	count;
+
+	count = 0;
 	if (!num)
-	{
-		write(1, "(nill)", 6);
-		return ;
-	}
-	write(1, "0x", 2);
-	ft_putnbr_hexa(num, 0);
+		return (write(1, "(nill)", 6));
+	count += write(1, "0x", 2);
+	count += ft_putnbr_hexa(num, 0);
+	return (count);
 }
